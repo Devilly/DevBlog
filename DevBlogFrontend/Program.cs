@@ -14,6 +14,10 @@ namespace DevBlogFrontend
     {
         public static async Task Main(string[] args)
         {
+            foreach(Type type in typeof(Program).Assembly.DefinedTypes) {
+               Console.WriteLine(type.FullName);
+            }
+
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
