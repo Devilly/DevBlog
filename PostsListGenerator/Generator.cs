@@ -23,7 +23,7 @@ namespace PostsListGenerator
             StringBuilder builder = new StringBuilder(@"
                 using System.Collections.Immutable;
 
-                namespace DevBlogFrontend {
+                namespace DevBlogFrontend.Domain {
                     public partial class Blog {
 
                         public static ImmutableList<string> Posts { get; }

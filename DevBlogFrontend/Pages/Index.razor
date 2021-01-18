@@ -1,7 +1,13 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using DevBlogFrontend.Domain
 
-Welcome to your new app.
+@code {
+    private string _html { get; set; }
+    protected override void OnInitialized()
+    {        
+        _html = string.Join("<br>", Blog.Posts);         
+    }
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@((MarkupString) _html)
