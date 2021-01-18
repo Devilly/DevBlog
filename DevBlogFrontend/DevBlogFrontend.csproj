@@ -10,4 +10,19 @@
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PostsListGenerator\PostsListGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+
+  <!-- Pass all posts Markdown files to the compiler.
+
+  Documentation about passing additional files to analyzers.
+  https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Using%20Additional%20Files.md#passing-an-individual-file
+
+  Generic build actions documentation.
+  https://docs.microsoft.com/en-us/visualstudio/ide/build-actions?view=vs-2019#build-action-values -->
+
+  <ItemGroup>
+    <AdditionalFiles Include="wwwroot\posts\**\text.md" />
+  </ItemGroup>
 </Project>
