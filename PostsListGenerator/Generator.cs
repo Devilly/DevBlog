@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Text;
-using System.Diagnostics;
+using System.IO;
+using Microsoft.CodeAnalysis.Text;
 
 namespace PostsListGenerator
 {
@@ -26,15 +27,26 @@ namespace PostsListGenerator
                 namespace DevBlogFrontend.Domain {
                     public partial class Blog {
 
-                        public static ImmutableList<string> Posts { get; }
+                        public static ImmutableList<Post> Posts { get; }
 
                         static Blog() {
-                            ImmutableList<string> temp = ImmutableList.Create<string>();
+                            ImmutableList<Post> temp = ImmutableList.Create<Post>();
                 ");            
-            
+
             foreach(AdditionalText entry in context.AdditionalFiles) {
+                string publicDirectory = "wwwroot";
+                string basePath = entry.Path.Substring(0, entry.Path.IndexOf(publicDirectory) + publicDirectory.Length);
+                string relativePath = Path.GetRelativePath(basePath, entry.Path);
+                // Relative path for in the browser.
+                relativePath = $"/{relativePath.Replace("\\", "/")}";
+
+                SourceText sourceText = entry.GetText(context.CancellationToken);
+                string text = sourceText.ToString();                
+
                 builder.Append($@"
-                            temp = temp.Add(@""{entry.Path}"");
+                            temp = temp.Add(new Post() {{
+                                Path = $@""{relativePath}""
+                            }});
                 ");
             }
 
