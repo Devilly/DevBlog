@@ -14,6 +14,13 @@ namespace DevBlogFrontend
     {
         public static async Task Main(string[] args)
         {
+            // https://docs.microsoft.com/en-us/aspnet/core/blazor/debug?view=aspnetcore-5.0&tabs=visual-studio#breakpoints-in-oninitializedasync-not-hit
+            #if DEBUG
+            
+            await Task.Delay(5000);
+            
+            #endif
+
             foreach(Type type in typeof(Program).Assembly.DefinedTypes) {
                Console.WriteLine(type.FullName);
             }
