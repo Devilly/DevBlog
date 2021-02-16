@@ -27,19 +27,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish debug",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "publish",
-                "${workspaceFolder}/DevBlogFrontend/DevBlogFrontend.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "publish release",
+            "label": "publish",
             "command": "dotnet",
             "type": "process",
             "args": [
