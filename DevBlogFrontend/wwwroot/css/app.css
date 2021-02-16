@@ -16,3 +16,44 @@
     right: 0.75rem;
     top: 0.5rem;
 }
+
+@font-face {
+    font-family: roboto;
+    src: url(fonts/roboto/Roboto-Light.ttf)
+}
+
+:root {
+    font-family: roboto;
+
+    --color-imperial-red: #e63946;
+    --color-honeydew: #f1faee;
+    --color-powder-blue: #a8dadc;
+    --color-celadon-blue: #457b9d;
+    --color-prussian-blue: #1d3557;
+}
+
+#index {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-celadon-blue);
+}
+
+a:hover {
+    color: var(--color-imperial-red);
+}
+
+#post {
+    text-align: justify;
+}
+
+#post img {
+    max-width: 100%;
+    max-height: 20em;
+}
+
+#post code {
+    background-color: var(--color-powder-blue);
+}

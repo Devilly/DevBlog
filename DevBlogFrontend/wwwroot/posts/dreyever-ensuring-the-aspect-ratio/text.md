@@ -1,6 +1,3 @@
-## Dreyever; ensuring the aspect ratio
-### 2018-09-01
-
 While creating [Dreyever](https://github.com/Devilly/dreyever) we have thought about the different aspect ratios screens can have. Dreyever is a platforming game where horizontal movement is key and making fast, yet calculated decisions should become an important part of the gameplay. With this in mind we decided making the view of the game more wide than high would be a no-brainer. (The other way around the time you have between seeing something appear on screen and having to respond to it would be too short.)
 
 Here rose the question of how to accomplish this. First of all we enforced the phone to be in landscape mode. On a phone with a 4:3 aspect ratio this would still mean a lot of focus would go to the vertical layers in the game instead of the more important horizontal progress one has to make. As we're currently focusing on the Android platform we went looking into its options to enforce a certain aspect ratio.

@@ -1,11 +1,8 @@
-## Hello Dreyever!
-### 2018-08-11
-
 [Dreyever](https://github.com/Devilly/dreyever), pronounced the same as "driver", is a game currently in development. It's a 2D platform game focussing on dreyevers, little unicars (unicycles are one-wheeled bicycles, unicars are from this moment on one-wheeled cars).
 
 E.g.
 
-<img src="./MrX2-Dreyever.png" width="150" />
+![MrX2-Dreyever](MrX2-Dreyever.png)
 
 The game is being created by three people:
 
@@ -19,11 +16,11 @@ Recently we switched to a new design which, for us, marks a new beginning for th
 
 The old design was in the style shown in the image below (screenshot of gameplay ran within Unity).
 
-<img src="./old-design.png" />
+![Example of the old design](old-design.png)
 
 Here is another image which shows the new style (early design reference image).
 
-<img src="./new-design.jpg" />
+![Example of the new design](new-design.jpg)
 
 The old style was very clean and maybe also somewhat boring. To us it seems the new style fixes this. It still has a clean look but with a broader color palette and a lot more elements to entertain the eye.
 

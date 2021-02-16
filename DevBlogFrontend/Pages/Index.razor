@@ -1,11 +1,20 @@
 ﻿@page "/"
 
+@using System.Collections.Immutable;
+
+@using System.Net.Http
+@inject HttpClient Http
+
 @code {
-    private string _html { get; set; }
-    protected override void OnInitialized()
-    {        
-        _html = string.Join("<br>", Blog.Posts);         
-    }
+    private ImmutableList<Post> Posts { get; } = Blog.Posts.Sort();
 }
 
-@((MarkupString) _html)
+<ol id="index">
+    @foreach(Post post in Posts) {
+        <li>
+            <NavLink href=@($"/post/{post.Path}")>
+                @post.Title
+            </NavLink>
+        </li>
+    }
+</ol>

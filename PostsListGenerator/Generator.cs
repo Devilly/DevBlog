@@ -1,7 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Text;
 using System.IO;
-using Microsoft.CodeAnalysis.Text;
+using System.Text.Json;
+using System.Dynamic;
 
 namespace PostsListGenerator
 {
@@ -22,6 +23,7 @@ namespace PostsListGenerator
         public void Execute(GeneratorExecutionContext context)
         {
             StringBuilder builder = new StringBuilder(@"
+                using System;
                 using System.Collections.Immutable;
 
                 namespace DevBlogFrontend.Domain {
@@ -34,18 +36,16 @@ namespace PostsListGenerator
                 ");            
 
             foreach(AdditionalText entry in context.AdditionalFiles) {
-                string publicDirectory = "wwwroot";
-                string basePath = entry.Path.Substring(0, entry.Path.IndexOf(publicDirectory) + publicDirectory.Length);
-                string relativePath = Path.GetRelativePath(basePath, entry.Path);
-                // Relative path for in the browser.
-                relativePath = $"/{relativePath.Replace("\\", "/")}";
+                string postPath = Path.TrimEndingDirectorySeparator(Path.GetRelativePath("wwwroot/posts", entry.Path).Replace("_meta.json", ""));
 
-                SourceText sourceText = entry.GetText(context.CancellationToken);
-                string text = sourceText.ToString();                
+                string text = entry.GetText(context.CancellationToken).ToString();
+                dynamic json = JsonSerializer.Deserialize<ExpandoObject>(text);
 
                 builder.Append($@"
                             temp = temp.Add(new Post() {{
-                                Path = $@""{relativePath}""
+                                Path = $@""{postPath}"",
+                                Title = ""{json.title}"",
+                                Date = DateTime.Parse(""{json.date}"")
                             }});
                 ");
             }

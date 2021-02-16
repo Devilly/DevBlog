@@ -1,0 +1,38 @@
+@page "/post/{identifier}"
+
+@using Markdig
+@using Markdig.Renderers
+@using Markdig.Syntax
+
+@using System.IO
+
+@inject NavigationManager NavigationManager
+
+@using System.Net.Http
+@inject HttpClient Http
+
+@code {
+  [Parameter]
+  public string Identifier { get; set; }
+
+  private string _html { get; set; }
+
+  protected override async Task OnInitializedAsync()
+  {
+    var post = await Http.GetStringAsync($"/posts/{Identifier}/text.md");
+
+    MarkdownPipeline pipeline = new MarkdownPipelineBuilder().Build();
+    MarkdownDocument document = Markdown.Parse(post, pipeline);
+
+    StringWriter writer = new();
+    HtmlRenderer renderer = new(writer);
+    renderer.BaseUrl = new Uri(new Uri(NavigationManager.BaseUri), $"posts/{Identifier}/");
+    renderer.Render(document);
+
+    _html = writer.ToString();
+  }
+}
+
+<div id="post">
+  @((MarkupString) _html)
+</div>
