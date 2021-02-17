@@ -36,6 +36,18 @@
     list-style: none;
 }
 
+#index li {
+    margin-bottom: 1em;
+}
+
+#index li a {
+    display: block;
+}
+
+#index li time {
+    font-size: .7em;
+}
+
 a {
     text-decoration: none;
     color: var(--color-celadon-blue);

@@ -12,6 +12,8 @@
             <NavLink href=@($"/post/{post.Path}")>
                 @post.Title
             </NavLink>
+            
+            <time>@post.Date.ToString("dd MMMM yyyy")</time>
         </li>
     }
 </ol>
