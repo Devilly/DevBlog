@@ -14,14 +14,25 @@
   [Parameter]
   public string Identifier { get; set; }
 
+  private Post post { get; set; }
+  
   private string _html { get; set; }
 
   protected override async Task OnInitializedAsync()
   {
-    var post = await Http.GetStringAsync($"/posts/{Identifier}/text.md");
+    // Find Post object
+    post = (
+      from entry in Blog.Posts
+      where entry.Path == Identifier
+      select entry
+    ).First();
+
+
+    // Get MarkDown and convert to HTML
+    var markdown = await Http.GetStringAsync($"/posts/{Identifier}/text.md");
 
     MarkdownPipeline pipeline = new MarkdownPipelineBuilder().Build();
-    MarkdownDocument document = Markdown.Parse(post, pipeline);
+    MarkdownDocument document = Markdown.Parse(markdown, pipeline);
 
     StringWriter writer = new();
     HtmlRenderer renderer = new(writer);
@@ -33,5 +44,7 @@
 }
 
 <div id="post">
+  <h1>@post.Title</h1>
+
   @((MarkupString) _html)
 </div>
