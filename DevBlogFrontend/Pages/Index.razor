@@ -2,9 +2,6 @@
 
 @using System.Collections.Immutable;
 
-@using System.Net.Http
-@inject HttpClient Http
-
 @code {
     private ImmutableList<Post> Posts { get; } = Blog.Posts.Sort();
 }
