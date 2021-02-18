@@ -17,7 +17,7 @@ namespace DevBlogFrontend
             // https://docs.microsoft.com/en-us/aspnet/core/blazor/debug?view=aspnetcore-5.0&tabs=visual-studio#breakpoints-in-oninitializedasync-not-hit
             #if DEBUG
             
-            await Task.Delay(5000);
+            // await Task.Delay(5000);
             
             #endif
 

@@ -3,6 +3,7 @@ using System.Text;
 using System.IO;
 using System.Text.Json;
 using System.Dynamic;
+using System.Diagnostics;
 
 namespace PostsListGenerator
 {
@@ -33,6 +34,7 @@ namespace PostsListGenerator
 
                         static Blog() {
                             ImmutableList<Post> temp = ImmutableList.Create<Post>();
+                            ImmutableList<string> tempTags = ImmutableList.Create<string>();
                 ");            
 
             foreach(AdditionalText entry in context.AdditionalFiles) {
@@ -41,12 +43,21 @@ namespace PostsListGenerator
                 string text = entry.GetText(context.CancellationToken).ToString();
                 dynamic json = JsonSerializer.Deserialize<ExpandoObject>(text);
 
+                foreach(JsonElement tag in json.tags.EnumerateArray()) {
+                   builder.Append($@"
+                            tempTags = tempTags.Add(""{tag.GetString()}"");
+                    ");
+                }
+
                 builder.Append($@"
                             temp = temp.Add(new Post() {{
                                 Path = $@""{postPath}"",
-                                Title = ""{json.title}"",
-                                Date = DateTime.Parse(""{json.date}"")
+                                Title = ""{json.title.GetString()}"",
+                                Date = DateTime.Parse(""{json.date.GetString()}""),
+                                Tags = tempTags
                             }});
+
+                            tempTags = tempTags.Clear();
                 ");
             }
 

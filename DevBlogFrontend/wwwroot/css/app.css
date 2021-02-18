@@ -54,6 +54,15 @@
     font-size: .7em;
 }
 
+#index li .tag {
+    background-color: var(--color-honeydew);
+    border-radius: 5px;
+    padding: .3em .5em;
+    margin-left: 1em;
+    font-size: .7em;
+    white-space: nowrap;
+}
+
 a {
     text-decoration: none;
     color: var(--color-celadon-blue);
