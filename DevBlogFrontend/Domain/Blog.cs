@@ -1,5 +1,7 @@
-namespace DevBlogFrontend.Domain {
-    public static partial class Blog {
+namespace DevBlogFrontend.Domain
+{
+    public static partial class Blog
+    {
 
     }
 }

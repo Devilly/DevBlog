@@ -17,7 +17,7 @@ namespace PostsListGenerator
 
             // Only works with the Just-In-Time debugger installed in VS.
             // https://docs.microsoft.com/en-us/visualstudio/debugger/debug-using-the-just-in-time-debugger?view=vs-2019
-            
+
             // Debugger.Launch();
         }
 
@@ -35,16 +35,18 @@ namespace PostsListGenerator
                         static Blog() {
                             ImmutableList<Post> temp = ImmutableList.Create<Post>();
                             ImmutableList<string> tempTags = ImmutableList.Create<string>();
-                ");            
+                ");
 
-            foreach(AdditionalText entry in context.AdditionalFiles) {
+            foreach (AdditionalText entry in context.AdditionalFiles)
+            {
                 string postPath = Path.TrimEndingDirectorySeparator(Path.GetRelativePath("wwwroot/posts", entry.Path).Replace("_meta.json", ""));
 
                 string text = entry.GetText(context.CancellationToken).ToString();
                 dynamic json = JsonSerializer.Deserialize<ExpandoObject>(text);
 
-                foreach(JsonElement tag in json.tags.EnumerateArray()) {
-                   builder.Append($@"
+                foreach (JsonElement tag in json.tags.EnumerateArray())
+                {
+                    builder.Append($@"
                             tempTags = tempTags.Add(""{tag.GetString()}"");
                     ");
                 }
@@ -67,7 +69,7 @@ namespace PostsListGenerator
                     }
                 }
             ");
-            
+
             string partialBlogClass = builder.ToString();
             context.AddSource("Blog.Generated.cs", partialBlogClass);
         }
