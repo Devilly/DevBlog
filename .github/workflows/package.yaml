@@ -29,5 +29,5 @@ jobs:
       run: dotnet restore
       working-directory: DevBlogFrontend
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --output ../build --no-restore
       working-directory: DevBlogFrontend
