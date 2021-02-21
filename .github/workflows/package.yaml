@@ -35,6 +35,8 @@ jobs:
       run: touch build/wwwroot/.nojekyll
     - name: Add custom 404 page (enable sub paths)
       run: cp build/wwwroot/index.html build/wwwroot/404.html
+    - name: Replace base HTML element
+      run: sed -i s/<base href="\/" \/>/<base href="\/DevBlog\/" \/>/
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.0.0
       with:
