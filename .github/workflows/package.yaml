@@ -1,0 +1,44 @@
+name: dotnet package
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dotnet: [5.0.x]
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v2
+    - name: Setup .NET ${{matrix.dotnet}} SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{matrix.dotnet}}
+    - name: Install tools
+      run: dotnet tool restore
+    - name: Validate formatting DevBlogFrontend
+      run: dotnet tool run dotnet-format --check
+      working-directory: DevBlogFrontend
+    - name: Validate formatting PostsListGenerator
+      run: dotnet tool run dotnet-format --check
+      working-directory: PostsListGenerator
+    - name: Install dependencies
+      run: dotnet restore
+      working-directory: DevBlogFrontend
+    - name: Build
+      run: dotnet publish --configuration Release --output ../build --no-restore
+      working-directory: DevBlogFrontend
+    - name: Bypass Jekyll (https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/)
+      run: touch build/wwwroot/.nojekyll
+    - name: Add custom 404 page (enable sub paths)
+      run: cp build/wwwroot/index.html build/wwwroot/404.html
+    - name: Replace base HTML element
+      run: sed -i 's/<base href="\/" \/>/<base href="\/DevBlog\/" \/>/' build/wwwroot/index.html
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@4.0.0
+      with:
+        branch: gh-pages
+        folder: build/wwwroot
