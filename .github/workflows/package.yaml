@@ -20,10 +20,10 @@ jobs:
     - name: Install tools
       run: dotnet tool restore
     - name: Validate formatting DevBlogFrontend
-      run: dotnet tool run dotnet-format --check DevBlogFrontend
+      run: dotnet tool run dotnet-format --check
       working-directory: DevBlogFrontend
     - name: Validate formatting PostsListGenerator
-      run: dotnet tool run dotnet-format --check PostsListGenerator
+      run: dotnet tool run dotnet-format --check
       working-directory: PostsListGenerator
     - name: Build
       run: dotnet build --configuration Release --no-restore
