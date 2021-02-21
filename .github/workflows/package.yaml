@@ -25,6 +25,9 @@ jobs:
     - name: Validate formatting PostsListGenerator
       run: dotnet tool run dotnet-format --check
       working-directory: PostsListGenerator
+    - name: Install dependencies
+      run: dotnet restore
+      working-directory: DevBlogFrontend
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: DevBlogFrontend
