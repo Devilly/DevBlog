@@ -1,0 +1,89 @@
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+@font-face {
+    font-family: roboto;
+    src: url(fonts/roboto/Roboto-Light.ttf)
+}
+
+@font-face {
+    font-family: fira;
+    src: url(fonts/fira_code/ttf/FiraCode-Regular.ttf)
+}
+
+:root {
+    font-family: roboto;
+
+    --color-imperial-red: #e63946;
+    --color-honeydew: #f1faee;
+    --color-powder-blue: #a8dadc;
+    --color-celadon-blue: #457b9d;
+    --color-prussian-blue: #1d3557;
+}
+
+#index {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+#index li {
+    margin-bottom: 1em;
+}
+
+#index li a {
+    display: block;
+}
+
+#index li time {
+    font-size: .7em;
+}
+
+#index li .tag {
+    background-color: var(--color-honeydew);
+    border-radius: 5px;
+    padding: .3em .5em;
+    margin-left: 1em;
+    font-size: .7em;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: var(--color-celadon-blue);
+}
+
+a:hover {
+    color: var(--color-imperial-red);
+}
+
+#post {
+    text-align: justify;
+}
+
+#post img {
+    max-width: 100%;
+    max-height: 20em;
+}
+
+#post code {
+    font-family: fira;
+    white-space: pre-wrap;
+    line-height: 1.5em;
+    background-color: var(--color-powder-blue);
+}
