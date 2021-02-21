@@ -9,7 +9,7 @@
 <ol id="index">
     @foreach(Post post in Posts) {
         <li>
-            <NavLink href=@($"./post/{post.Path}")>
+            <NavLink href=@($"post/{post.Path}")>
                 @post.Title
             </NavLink>
             
