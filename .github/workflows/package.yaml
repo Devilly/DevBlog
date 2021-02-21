@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: ${{matrix.dotnet}}
     - name: Install tools
-      run: dotnet tools restore
+      run: dotnet tool restore
     - name: Validate formatting DevBlogFrontend
       run: dotnet tool run dotnet-format --check DevBlogFrontend
       working-directory: DevBlogFrontend
