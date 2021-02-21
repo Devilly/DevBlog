@@ -20,6 +20,12 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
       working-directory: DevBlogFrontend
+    - name: Validate formatting DevBlogFrontend
+      run: dotnet tool run dotnet-format DevBlogFrontend
+      working-directory: DevBlogFrontend
+    - name: Validate formatting PostsListGenerator
+      run: dotnet tool run dotnet-format PostsListGenerator
+      working-directory: PostsListGenerator
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: DevBlogFrontend
