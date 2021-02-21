@@ -29,7 +29,7 @@ jobs:
       run: dotnet restore
       working-directory: DevBlogFrontend
     - name: Build
-      run: dotnet build --configuration Release --output ../build --no-restore
+      run: dotnet publish --configuration Release --output ../build --no-restore
       working-directory: DevBlogFrontend
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.0.0
