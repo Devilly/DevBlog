@@ -32,7 +32,7 @@ jobs:
       run: dotnet build --configuration Release --output ../build --no-restore
       working-directory: DevBlogFrontend
     - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.0.0
-        with:
-          branch: gh-pages
-          folder: build/wwwroot
+      uses: JamesIves/github-pages-deploy-action@4.0.0
+      with:
+        branch: gh-pages
+        folder: build/wwwroot
