@@ -4,15 +4,19 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        dotnet: [5.0.x]
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET Core SDK
+    - name: Checkout source
+      uses: actions/checkout@v2
+    - name: Setup .NET ${{matrix.dotnet}} SDK
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: ${{matrix.dotnet}}
     - name: Install dependencies
       run: dotnet restore
       working-directory: DevBlogFrontend
