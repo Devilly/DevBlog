@@ -31,6 +31,8 @@ jobs:
     - name: Build
       run: dotnet publish --configuration Release --output ../build --no-restore
       working-directory: DevBlogFrontend
+    - name: Bypass Jekyll (https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/)
+      run: touch build/wwwroot/.nojekyll
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.0.0
       with:
