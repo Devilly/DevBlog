@@ -29,7 +29,7 @@
 
 
     // Get MarkDown and convert to HTML
-    var markdown = await Http.GetStringAsync($"/posts/{Identifier}/text.md");
+    var markdown = await Http.GetStringAsync($"./posts/{Identifier}/text.md");
 
     MarkdownPipeline pipeline = new MarkdownPipelineBuilder().Build();
     MarkdownDocument document = Markdown.Parse(markdown, pipeline);
