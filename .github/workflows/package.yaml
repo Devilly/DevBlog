@@ -36,10 +36,10 @@ jobs:
       working-directory: DevBlogFrontend
     - name: Bypass Jekyll (https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/)
       run: touch build/wwwroot/.nojekyll
-    - name: Add custom 404 page (enable sub paths)
-      run: cp build/wwwroot/index.html build/wwwroot/404.html
     - name: Replace base HTML element
       run: sed -i 's/<base href="\/" \/>/<base href="\/DevBlog\/" \/>/' build/wwwroot/index.html
+    - name: Add custom 404 page (enable sub paths)
+      run: cp build/wwwroot/index.html build/wwwroot/404.html
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.0.0
       with:
