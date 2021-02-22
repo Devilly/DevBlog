@@ -21,6 +21,8 @@ namespace DevBlogFrontend
 
 #endif
 
+            Console.WriteLine("### DEBUG - Compiled types");
+
             foreach (Type type in typeof(Program).Assembly.DefinedTypes)
             {
                 Console.WriteLine(type.FullName);
@@ -30,6 +32,9 @@ namespace DevBlogFrontend
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            Console.WriteLine("### DEBUG - Base URI");
+            Console.WriteLine(builder.HostEnvironment.BaseAddress);
 
             await builder.Build().RunAsync();
         }
