@@ -39,7 +39,7 @@ jobs:
     - name: Create repo name variable
       run: repo="$GITHUB_REPOSITORY"
     - name: Print repo name variable
-      run: echo $repo
+      run: echo $GITHUB_REPOSITORY
     - name: Replace base HTML element with repo name
       run: sed -i 's/<base href="\/" \/>/<base href="\/$repo\/" \/>/' build/wwwroot/index.html
     - name: Add custom 404 page (enable sub paths)
