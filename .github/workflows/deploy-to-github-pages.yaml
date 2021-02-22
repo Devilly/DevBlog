@@ -37,7 +37,7 @@ jobs:
     - name: Bypass Jekyll (https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/)
       run: touch build/wwwroot/.nojekyll
     - name: Create repo name variable
-      run: repo=$(echo "$GITHUB_REPOSITORY" | sed 's/[^\]*\///')
+      run: repo="$GITHUB_REPOSITORY"
     - name: Print repo name variable
       run: echo $repo
     - name: Replace base HTML element with repo name
