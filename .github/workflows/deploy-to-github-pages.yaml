@@ -34,13 +34,18 @@ jobs:
     - name: Build
       run: dotnet publish --configuration Release --output ../build --no-restore
       working-directory: DevBlogFrontend
-    - name: Bypass Jekyll (https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/)
+    - name: <GH Pages> Bypass Jekyll
+      # https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/
       run: touch build/wwwroot/.nojekyll
-    - name: Create repo name variable
-      run: repo=$(echo "$GITHUB_REPOSITORY" | sed 's/[^\]*\///')
-    - name: Replace base HTML element
-      run: sed -i 's/<base href="\/" \/>/<base href="\/$repo\/" \/>/' build/wwwroot/index.html
-    - name: Add custom 404 page (enable sub paths)
+    - name: <GH Pages> Set correct base path
+      # GH Pages use the repo name as base path.
+      run: |
+        repo=$(echo $GITHUB_REPOSITORY | sed 's/[^\]*\///')
+        sed -i "s/<base href=\"\/\" \/>/<base href=\"\/$repo\/\" \/>/" build/wwwroot/index.html
+    - name: <GH Pages> Enable URL routing
+      # GH Pages return a 404 page for nested paths.
+      # Use the index.html file as a custom 404 page to fix this.
+      # GH Pages says 404 > index.html is given > frontend routing is applied as normal.
       run: cp build/wwwroot/index.html build/wwwroot/404.html
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.0.0
