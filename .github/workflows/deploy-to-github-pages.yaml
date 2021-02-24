@@ -40,7 +40,7 @@ jobs:
       working-directory: DevBlogFrontend
     - name: <GH Pages> Bypass Jekyll
       # https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/
-      run: touch build/wwwroot/.nojekyll
+      run: New-Item -Path build/wwwroot/ -Name .nojekyll
     - name: <GH Pages> Set correct base path
       # GH Pages use the repo name as base path.
       run: |
