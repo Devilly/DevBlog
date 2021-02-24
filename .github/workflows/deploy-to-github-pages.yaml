@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+defaults:
+  run:
+    shell: pwsh
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -22,7 +26,6 @@ jobs:
         dotnet-version: ${{matrix.dotnet}}
     - name: Install tools
       run: dotnet tool restore
-      shell: pwsh
     - name: Validate formatting DevBlogFrontend
       run: dotnet tool run dotnet-format --check
       working-directory: DevBlogFrontend
