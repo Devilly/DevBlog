@@ -44,6 +44,9 @@ jobs:
     - name: <GH Pages> Set correct base path
       # GH Pages use the repo name as base path.
       run: |
+        Write-Output "repository: $GITHUB_REPOSITORY"
+        $selection = $GITHUB_REPOSITORY | Select-String '[^/]*/(.*)'
+        Write-Output $selection
         $repo = ($GITHUB_REPOSITORY | Select-String '[^/]*/(.*)').Matches[0].Groups[1]
         $file = 'build/wwwroot/index.html'
         (Get-Content $file).Replace('<base href="/" />', '<base href="/$repo/" />') | Set-Content $file
