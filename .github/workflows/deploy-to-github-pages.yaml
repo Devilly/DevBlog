@@ -46,7 +46,7 @@ jobs:
       run: |
         $repo = $Env:GITHUB_REPOSITORY | Select-String '[^/]*/(.*)').Matches[0].Groups[1]
         $file = 'build/wwwroot/index.html'
-        Get-Content -Path $file -creplace "<base href=""/"" />", "<base href=""/$repo/"" />") | Set-Content $file
+        Get-Content -Path $file -creplace "<base href=""/"" />", "<base href=""/$repo/"" />" | Set-Content $file
     - name: <GH Pages> Enable URL routing
       # GH Pages return a 404 page for nested paths.
       # Use the index.html file as a custom 404 page to fix this.
