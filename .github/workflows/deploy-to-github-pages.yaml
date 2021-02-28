@@ -44,7 +44,7 @@ jobs:
     - name: <GH Pages> Set correct base path
       # GH Pages use the repo name as base path.
       run: |
-        $repo = ($Env:GITHUB_REPOSITORY | Select-String -Pattern '[^/]*/(.*)').Matches[0].Groups[1]
+        $repo = $Env:GITHUB_REPOSITORY -creplace '[^/]*/(?<repoName>.*)', '${repoName}'
         $file = 'build/wwwroot/index.html'
         (Get-Content -Path $file) -creplace "<base href=""/"" />", "<base href=""/$repo/"" />" | Set-Content -Path $file
     - name: <GH Pages> Enable URL routing
