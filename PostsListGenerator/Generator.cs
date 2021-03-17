@@ -39,7 +39,7 @@ namespace PostsListGenerator
 
             foreach (AdditionalText entry in context.AdditionalFiles)
             {
-                string postPath = Path.TrimEndingDirectorySeparator(Path.GetRelativePath("wwwroot/posts", entry.Path).Replace("_meta.json", ""));
+                string postPath = entry.Path.Split(Path.DirectorySeparatorChar)[^2];
 
                 string text = entry.GetText(context.CancellationToken).ToString();
                 dynamic json = JsonSerializer.Deserialize<ExpandoObject>(text);
