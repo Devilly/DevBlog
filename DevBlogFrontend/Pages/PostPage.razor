@@ -39,11 +39,11 @@
     HtmlRenderer renderer = new(writer);
     renderer.BaseUrl = new Uri(new Uri(NavigationManager.BaseUri), $"posts/{Identifier}/");
     renderer.Render(document);
-    
+
     _html = writer.ToString();
   }
 
-  protected override async Task OnAfterRenderAsync(bool _)
+  protected override void OnAfterRender(bool _)
   {
     JS.InvokeAsync<string>("hljs.highlightAll");
   }
