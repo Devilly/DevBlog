@@ -17,18 +17,8 @@
     top: 0.5rem;
 }
 
-@font-face {
-    font-family: roboto;
-    src: url(fonts/roboto/Roboto-Light.ttf)
-}
-
-@font-face {
-    font-family: fira;
-    src: url(fonts/fira_code/ttf/FiraCode-Regular.ttf)
-}
-
 :root {
-    font-family: roboto;
+    font-family: Roboto;
 
     --color-imperial-red: #e63946;
     --color-honeydew: #f1faee;
@@ -82,8 +72,6 @@ a:hover {
 }
 
 #post code {
-    font-family: fira;
+    text-align: start;
     white-space: pre-wrap;
-    line-height: 1.5em;
-    background-color: var(--color-powder-blue);
 }

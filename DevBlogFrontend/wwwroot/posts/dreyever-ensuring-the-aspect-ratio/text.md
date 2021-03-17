@@ -10,14 +10,14 @@ We want to prevent less than ideal aspect ratios as much as possible. That's why
 
 We're aiming for a 16:9 aspect ratio because of the horizontal focus together with the fact that this is a common format. 16:9 can also be written as 16/9 ≈ 1.78. If the screen aspect ratio is smaller than ~1.78 the screen is too high for the aspect ratio. In this case we can set the width of the pixelRect to the screen width and have to calculate the height based on this width.
 
-```
+```csharp
 float height = Screen.width / desiredAspectRatio;
 Camera.main.pixelRect = Rect(0, (Screen.height - height) / 2, Screen.width, height);
 ```
 
 desiredAspectRatio is ~1.78, we're using the main camera and we're vertically centering the rect in the available screen space. If the screen aspect ratio would be the bigger than ~1.78 we have to adapt the width of the pixelRect.
 
-```
+```csharp
 float width = Screen.height * desiredAspectRatio;
 Camera.main.pixelRect = new Rect((Screen.width - width) / 2, 0, width, Screen.height);
 ```

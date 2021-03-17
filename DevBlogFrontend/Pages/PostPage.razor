@@ -7,6 +7,7 @@
 @using System.IO
 
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
 @inject HttpClient Http
 
@@ -38,8 +39,13 @@
     HtmlRenderer renderer = new(writer);
     renderer.BaseUrl = new Uri(new Uri(NavigationManager.BaseUri), $"posts/{Identifier}/");
     renderer.Render(document);
-
+    
     _html = writer.ToString();
+  }
+
+  protected override async Task OnAfterRenderAsync(bool _)
+  {
+    JS.InvokeAsync<string>("hljs.highlightAll");
   }
 }
 
