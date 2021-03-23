@@ -44,7 +44,6 @@ jobs:
     - name: <GH Pages> Set correct base path
       # GH Pages uses the repo name as base path.
       # Has been commented because we're now using a custom domain where the root is the base path.
-
       # run: |
       #   $repo = $Env:GITHUB_REPOSITORY -creplace '[^/]*/(?<repoName>.*)', '${repoName}'
       #   $file = 'build/wwwroot/index.html'
