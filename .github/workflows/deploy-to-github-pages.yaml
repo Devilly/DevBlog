@@ -42,13 +42,15 @@ jobs:
       # https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/
       run: New-Item -Path build/wwwroot/ -Name .nojekyll
     - name: <GH Pages> Set correct base path
-      # GH Pages use the repo name as base path.
-      run: |
-        $repo = $Env:GITHUB_REPOSITORY -creplace '[^/]*/(?<repoName>.*)', '${repoName}'
-        $file = 'build/wwwroot/index.html'
-        (Get-Content -Path $file) -creplace "<base href=""/"" />", "<base href=""/$repo/"" />" | Set-Content -Path $file
+      # GH Pages uses the repo name as base path.
+      # Has been commented because we're now using a custom domain where the root is the base path.
+
+      # run: |
+      #   $repo = $Env:GITHUB_REPOSITORY -creplace '[^/]*/(?<repoName>.*)', '${repoName}'
+      #   $file = 'build/wwwroot/index.html'
+      #   (Get-Content -Path $file) -creplace "<base href=""/"" />", "<base href=""/$repo/"" />" | Set-Content -Path $file
     - name: <GH Pages> Enable URL routing
-      # GH Pages return a 404 page for nested paths.
+      # GH Pages returns a 404 page for nested paths.
       # Use the index.html file as a custom 404 page to fix this.
       # GH Pages says 404 > index.html is given > frontend routing is applied as normal.
       run: Copy-Item -Path build/wwwroot/index.html -Destination build/wwwroot/404.html
