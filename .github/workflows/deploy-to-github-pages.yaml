@@ -41,13 +41,15 @@ jobs:
     - name: <GH Pages> Bypass Jekyll
       # https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/
       run: New-Item -Path build/wwwroot/ -Name .nojekyll
-    - name: <GH Pages> Set correct base path
+      
+      # - name: <GH Pages> Set correct base path
       # GH Pages uses the repo name as base path.
       # Has been commented because we're now using a custom domain where the root is the base path.
       # run: |
       #   $repo = $Env:GITHUB_REPOSITORY -creplace '[^/]*/(?<repoName>.*)', '${repoName}'
       #   $file = 'build/wwwroot/index.html'
       #   (Get-Content -Path $file) -creplace "<base href=""/"" />", "<base href=""/$repo/"" />" | Set-Content -Path $file
+      
     - name: <GH Pages> Enable URL routing
       # GH Pages returns a 404 page for nested paths.
       # Use the index.html file as a custom 404 page to fix this.
