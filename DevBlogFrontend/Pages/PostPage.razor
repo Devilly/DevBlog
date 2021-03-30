@@ -32,12 +32,17 @@
     // Get MarkDown and convert to HTML
     var markdown = await Http.GetStringAsync($"posts/{Identifier}/text.md");
 
-    MarkdownPipeline pipeline = new MarkdownPipelineBuilder().Build();
+    MarkdownPipeline pipeline = new MarkdownPipelineBuilder()
+      .UseDiagrams()
+      .Build();
     MarkdownDocument document = Markdown.Parse(markdown, pipeline);
 
     StringWriter writer = new();
     HtmlRenderer renderer = new(writer);
     renderer.BaseUrl = new Uri(new Uri(NavigationManager.BaseUri), $"posts/{Identifier}/");
+
+    pipeline.Setup(renderer);
+
     renderer.Render(document);
 
     _html = writer.ToString();
@@ -46,6 +51,7 @@
   protected override void OnAfterRender(bool _)
   {
     JS.InvokeAsync<string>("hljs.highlightAll");
+    JS.InvokeAsync<string>("mermaidify");
   }
 }
 
