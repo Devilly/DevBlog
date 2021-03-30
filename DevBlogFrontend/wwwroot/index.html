@@ -25,10 +25,9 @@
             var elements = document.querySelectorAll(".mermaid");
 
             elements.forEach((element, index) => {
-                element.id = `mermaid_container_${index}`;
-                mermaid.mermaidAPI.render(`mermaid_svg_${index}`, element.textContent, svgCode => {
-                    element.innerHTML = svgCode;
-                });
+                var svg = mermaid.mermaidAPI.render(`mermaid_svg_${index}`, element.textContent);
+
+                element.innerHTML = svg;
             })
         }
     </script>
