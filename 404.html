@@ -40,7 +40,7 @@
                 const code = element.textContent;
 
                 const codeElement = element.querySelector("code");
-                hljs.highlightBlock(codeElement);
+                hljs.highlightElement(codeElement);
                 
                 if(!codeElement.classList.contains("language-javascript")) {
                     return;
