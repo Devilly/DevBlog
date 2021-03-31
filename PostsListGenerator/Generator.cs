@@ -41,9 +41,9 @@ namespace PostsListGenerator
             {
                 string postPath = entry.Path.Split(Path.DirectorySeparatorChar)[^2];
 
-                #if RELEASE
+#if RELEASE
                     if(postPath.StartsWith("___")) continue;
-                #endif
+#endif
 
                 string text = entry.GetText(context.CancellationToken).ToString();
                 dynamic json = JsonSerializer.Deserialize<ExpandoObject>(text);
