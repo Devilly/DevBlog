@@ -53,8 +53,9 @@
     display: inline-block;
 }
 
-#back {
-    font-size: 2em;
+#back svg {
+    width: 3em;
+    height: 3em;
 }
 
 a {

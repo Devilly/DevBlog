@@ -52,15 +52,16 @@
   {
     JS.InvokeAsync<string>("hljs.highlightAll");
     JS.InvokeAsync<string>("mermaidify");
+    JS.InvokeAsync<string>("feather.replace");
   }
 }
-
-<NavLink id="back" href="/">
-    🠔
-</NavLink>
 
 <div id="post">
   <h2>@post.Title</h2>
 
   @((MarkupString) _html)
 </div>
+
+<NavLink id="back" href="/">
+    <i data-feather="arrow-left-circle"></i>
+</NavLink>
