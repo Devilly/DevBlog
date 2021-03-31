@@ -5,5 +5,8 @@
 }
 
 #centered[b-uwab4uufw2] {
-  max-width: 600px;
+  --width: 600px;
+
+  width: var(--width);
+  max-width: var(--width);
 }
