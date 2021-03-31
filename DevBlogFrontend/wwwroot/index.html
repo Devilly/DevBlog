@@ -23,7 +23,7 @@
     <script>mermaid.initialize({ startOnLoad:false });</script>
 
     <script>
-        function mermaidify() {
+        function initializeMermaid() {
             var elements = document.querySelectorAll(".mermaid");
 
             elements.forEach((element, index) => {
@@ -31,6 +31,22 @@
 
                 element.innerHTML = svg;
             })
+        }
+
+        function initializeHightlightjs() {
+            var elements = document.querySelectorAll("pre code");
+
+            elements.forEach(element => hljs.highlightBlock(element));
+        }
+
+        function initializeFeather() {
+            var elements = document.querySelectorAll("[data-feather]");
+
+            elements.forEach(element => {
+                const icon = element.getAttribute("data-feather");
+                
+                element.outerHTML = feather.icons[icon].toSvg();
+            });
         }
     </script>
 </head>
