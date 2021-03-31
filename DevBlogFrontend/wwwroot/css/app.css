@@ -58,6 +58,19 @@
     height: 3em;
 }
 
+button {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+
+    color: var(--color-celadon-blue);
+}
+
+button:hover {
+    color: var(--color-imperial-red);
+}
+
 a {
     text-decoration: none;
     color: var(--color-celadon-blue);

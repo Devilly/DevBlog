@@ -34,9 +34,30 @@
         }
 
         function initializeHightlightjs() {
-            var elements = document.querySelectorAll("pre code");
+            var elements = document.querySelectorAll("pre");
+            
+            elements.forEach(element => {
+                const code = element.textContent;
 
-            elements.forEach(element => hljs.highlightBlock(element));
+                const codeElement = element.querySelector("code");
+                hljs.highlightBlock(codeElement);
+                
+                if(!codeElement.classList.contains("language-javascript")) {
+                    return;
+                }
+                
+                const runIcon = document.createElement("i");
+                runIcon.setAttribute("data-feather", "play-circle");
+
+                const runButton = document.createElement("button");
+                runButton.addEventListener("click", () => {
+                    eval(code);
+                });
+                
+                runButton.appendChild(runIcon);
+
+                element.parentElement.insertBefore(runButton, element.nextSibling);
+            });
         }
 
         function initializeFeather() {
