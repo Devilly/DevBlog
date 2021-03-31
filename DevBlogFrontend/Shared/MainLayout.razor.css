@@ -4,8 +4,5 @@
 }
 
 #centered {
-  --width: 600px;
-
-  width: var(--width);
-  max-width: var(--width);
+  max-width: 600px;
 }
