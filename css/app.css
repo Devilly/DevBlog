@@ -80,7 +80,13 @@ a:hover {
     color: var(--color-imperial-red);
 }
 
+canvas {
+    display: block;
+}
+
 #post {
+    width: 600px;
+    max-width: 100%;
     text-align: justify;
 }
 
