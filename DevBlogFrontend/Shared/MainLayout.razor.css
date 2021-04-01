@@ -4,6 +4,6 @@
 }
 
 #centered {
-  max-width: 600px;
-  word-wrap: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
