@@ -4,7 +4,7 @@
 const context = canvas.getContext('2d')
 
 let lastMouseEvent
-canvas.addEventListener('mousemove', event => lastMouseEvent = event)
+document.addEventListener('mousemove', event => lastMouseEvent = event)
 
 ;(function main(lastTime, time) {
     window.requestAnimationFrame(main.bind(null, time))
@@ -15,8 +15,8 @@ canvas.addEventListener('mousemove', event => lastMouseEvent = event)
 
     if(!lastMouseEvent) return
 
-    const positionX = lastMouseEvent.clientX - canvas.getBoundingClientRect().left
-    const positionY = lastMouseEvent.clientY - canvas.getBoundingClientRect().top
+    const positionX = Math.min(canvas.width, Math.max(0, lastMouseEvent.clientX - canvas.getBoundingClientRect().left))
+    const positionY = Math.min(canvas.height, Math.max(0, lastMouseEvent.clientY - canvas.getBoundingClientRect().top))
 
     const coordinatesText = `(${positionX},${positionY})`
 
