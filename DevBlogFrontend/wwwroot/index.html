@@ -38,18 +38,17 @@
             
             elements.forEach(element => {
                 const code = element.textContent;
-                const postContainer = element.parentElement;
-
                 const codeElement = element.querySelector("code");
-                hljs.highlightElement(codeElement);
+                const postContainer = document.querySelector("#post");
                 
                 if(!codeElement.classList.contains("language-javascript")) {
+                    hljs.highlightElement(codeElement);
+
                     return;
                 }
 
-                if(postContainer.clientWidth < 200) {
-                    return;
-                }
+                // Remove code element
+                element.parentElement.removeChild(element);
                 
                 // Create and add canvas
                 const width = postContainer.clientWidth;
@@ -61,18 +60,8 @@
 
                 postContainer.insertBefore(canvas, element.nextElementSibling);
 
-                // Create and add run button
-                const runIcon = document.createElement("i");
-                runIcon.setAttribute("data-feather", "play-circle");
-
-                const runButton = document.createElement("button");
-                runButton.addEventListener("click", () => {
-                    eval(`(async () => { ${code} })()`);
-                });
-                
-                runButton.appendChild(runIcon);
-
-                postContainer.insertBefore(runButton, canvas);
+                // Execute code
+                eval(`(async () => { ${code} })()`);
             });
         }
 
