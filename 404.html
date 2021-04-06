@@ -38,6 +38,7 @@
             
             elements.forEach(element => {
                 const code = element.textContent;
+                const postContainer = element.parentElement;
 
                 const codeElement = element.querySelector("code");
                 hljs.highlightElement(codeElement);
@@ -45,18 +46,33 @@
                 if(!codeElement.classList.contains("language-javascript")) {
                     return;
                 }
+
+                if(postContainer.clientWidth < 200) {
+                    return;
+                }
                 
+                // Create and add canvas
+                const width = postContainer.clientWidth;
+                const height = Math.round(postContainer.clientWidth / 2);
+
+                const canvas = document.createElement("canvas")
+                canvas.setAttribute("width", width);
+                canvas.setAttribute("height", height);
+
+                postContainer.insertBefore(canvas, element.nextElementSibling);
+
+                // Create and add run button
                 const runIcon = document.createElement("i");
                 runIcon.setAttribute("data-feather", "play-circle");
 
                 const runButton = document.createElement("button");
                 runButton.addEventListener("click", () => {
-                    eval(code);
+                    eval(`(async () => { ${code} })()`);
                 });
                 
                 runButton.appendChild(runIcon);
 
-                element.parentElement.insertBefore(runButton, element.nextSibling);
+                postContainer.insertBefore(runButton, canvas);
             });
         }
 
