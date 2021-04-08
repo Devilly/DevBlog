@@ -3,7 +3,8 @@ using System.Text;
 using System.IO;
 using System.Text.Json;
 using System.Dynamic;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System;
 
 namespace PostsListGenerator
 {
@@ -50,8 +51,24 @@ namespace PostsListGenerator
 
                 foreach (JsonElement tag in json.tags.EnumerateArray())
                 {
+                    string tagText = tag.GetString();
+
+                    if(!(new List<string> {
+                        "C#",
+                        "HTML",
+                        "JavaScript",
+                        "canvas",
+                        "woodwork",
+                        "psychology",
+                        "GameMaker 1.4",
+                        "A*",
+                        "Unity"
+                    }).Contains(tagText)) {
+                        Environment.Exit(1);
+                    }
+
                     builder.Append($@"
-                            tempTags = tempTags.Add(""{tag.GetString()}"");
+                            tempTags = tempTags.Add(""{tagText}"");
                     ");
                 }
 
