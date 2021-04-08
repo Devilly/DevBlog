@@ -80,11 +80,6 @@ a:hover {
     color: var(--color-imperial-red);
 }
 
-canvas {
-    display: block;
-    touch-action: none;
-}
-
 #post {
     width: 600px;
     max-width: 100%;
@@ -99,6 +94,12 @@ canvas {
 #post code {
     text-align: start;
     white-space: pre-wrap;
+}
+
+#post canvas {
+    display: block;
+    touch-action: none;
+    width: 100%;
 }
 
 #post ul {
