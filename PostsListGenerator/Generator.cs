@@ -53,7 +53,7 @@ namespace PostsListGenerator
                 {
                     string tagText = tag.GetString();
 
-                    if(!(new List<string> {
+                    if (!(new List<string> {
                         "C#",
                         "HTML",
                         "JavaScript",
@@ -63,7 +63,8 @@ namespace PostsListGenerator
                         "GameMaker 1.4",
                         "A*",
                         "Unity"
-                    }).Contains(tagText)) {
+                    }).Contains(tagText))
+                    {
                         Environment.Exit(1);
                     }
 
