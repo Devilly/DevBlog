@@ -100,3 +100,8 @@ canvas {
     text-align: start;
     white-space: pre-wrap;
 }
+
+#post ul {
+    padding-inline-start: 0px;
+    list-style-position: inside;
+}
