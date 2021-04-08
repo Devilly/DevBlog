@@ -9,6 +9,10 @@ canvas.addEventListener('pointermove', event => {
   lastMouseEvent = event
 })
 
+function formatPositionNumber(number) {
+  return number.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})
+}
+
 ;(function main(lastTime, time) {
     window.requestAnimationFrame(main.bind(null, time))
 
@@ -23,7 +27,7 @@ canvas.addEventListener('pointermove', event => {
     const positionX = Math.min(canvas.width, Math.max(0, lastMouseEvent.clientX - canvas.getBoundingClientRect().left))
     const positionY = Math.min(canvas.height, Math.max(0, lastMouseEvent.clientY - canvas.getBoundingClientRect().top))
 
-    const coordinatesText = `(${positionX},${positionY})`
+    const coordinatesText = `(${formatPositionNumber(positionX)},${formatPositionNumber(positionY)})`
 
     const textMetrics = context.measureText(coordinatesText)
     // https://developer.mozilla.org/en-US/docs/Web/API/TextMetrics#measuring_text_width
