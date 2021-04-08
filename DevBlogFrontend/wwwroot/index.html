@@ -51,14 +51,17 @@
                 element.parentElement.removeChild(element);
                 
                 // Create and add canvas
-                const width = postContainer.clientWidth;
-                const height = Math.round(postContainer.clientWidth / 2);
-
                 const canvas = document.createElement("canvas")
-                canvas.setAttribute("width", width);
-                canvas.setAttribute("height", height);
 
                 postContainer.insertBefore(canvas, element.nextElementSibling);
+
+                // Adapt canvas width and height to how it is resized (based on 100% width in CSS)
+                const resizeObserver = new ResizeObserver(entries => {
+                    canvas.width = entries[0].devicePixelContentBoxSize[0].inlineSize;
+                    canvas.height = canvas.width / 2;
+                });
+
+                resizeObserver.observe(canvas);
 
                 // Execute code
                 eval(`(async () => { ${code} })()`);
