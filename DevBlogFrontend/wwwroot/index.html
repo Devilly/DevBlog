@@ -57,7 +57,7 @@
 
                 // Adapt canvas width and height to how it is resized (based on 100% width in CSS)
                 const resizeObserver = new ResizeObserver(entries => {
-                    canvas.width = entries[0].devicePixelContentBoxSize[0].inlineSize;
+                    canvas.width = entries[0].contentBoxSize[0].inlineSize;
                     canvas.height = canvas.width / 2;
                 });
 
