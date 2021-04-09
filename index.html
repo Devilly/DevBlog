@@ -52,6 +52,10 @@
                 
                 // Create and add canvas
                 const canvas = document.createElement("canvas")
+                canvas.addEventListener('pointermove', event => {
+                    canvas.setPointerCapture(event.pointerId)
+                    event.preventDefault()
+                })
 
                 postContainer.insertBefore(canvas, element.nextElementSibling);
 
