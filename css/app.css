@@ -96,12 +96,6 @@ a:hover {
     white-space: pre-wrap;
 }
 
-#post canvas {
-    display: block;
-    touch-action: none;
-    width: 100%;
-}
-
 #post ul {
     padding-inline-start: 0px;
     list-style-position: inside;
