@@ -1,13 +1,34 @@
 ```javascript
-const context = canvas.getContext('2d')
 
+// Set canvas styling.
+canvas.style.display = "block";
+canvas.style.touchAction = "none";
+canvas.style.width = "100%";
+
+// Handle mouse events.
 let lastMouseEvent
-canvas.addEventListener('pointermove', event => {
+canvas.addEventListener('pointerdown', event => {
   canvas.setPointerCapture(event.pointerId)
-  event.preventDefault()
 
   lastMouseEvent = event
-})
+});
+canvas.addEventListener('pointermove', event => {
+  lastMouseEvent = event
+});
+canvas.addEventListener('pointerup', event => {
+  canvas.releasePointerCapture(event.pointerId)
+});
+
+// Adapt canvas width and height to how it is resized (by the CSS width rule).
+const resizeObserver = new ResizeObserver(entries => {
+    canvas.width = entries[0].contentBoxSize[0].inlineSize;
+    canvas.height = canvas.width / 2;
+});
+resizeObserver.observe(canvas);
+
+//////////////////////////////////////////////////
+
+const context = canvas.getContext('2d')
 
 function formatPositionNumber(number) {
   return number.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})
@@ -47,4 +68,5 @@ function formatPositionNumber(number) {
 
     context.restore()
 })()
+
 ```
