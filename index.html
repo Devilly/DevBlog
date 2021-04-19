@@ -23,7 +23,7 @@
     <script>mermaid.initialize({ startOnLoad:false });</script>
 
     <script>
-        function initializeMermaid() {
+        function initializeDiagrams() {
             var elements = document.querySelectorAll(".mermaid");
 
             elements.forEach((element, index) => {
@@ -33,7 +33,7 @@
             })
         }
 
-        function initializeHightlightjs() {
+        function initializeCodeBlocks() {
             var elements = document.querySelectorAll("pre");
             
             elements.forEach(element => {
@@ -59,7 +59,7 @@
             });
         }
 
-        function initializeFeather() {
+        function initializeIcons() {
             var elements = document.querySelectorAll("[data-feather]");
 
             elements.forEach(element => {
