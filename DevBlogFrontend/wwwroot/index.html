@@ -54,7 +54,8 @@
                 const canvas = document.createElement("canvas")
                 postContainer.insertBefore(canvas, element.nextElementSibling);
 
-                // Execute code 
+                // Execute code
+                // Use an alternative to eval: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!
                 Function(`"use strict";return async ({
                     canvas,
                     postIdentifier
