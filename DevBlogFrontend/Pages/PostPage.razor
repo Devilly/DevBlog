@@ -50,7 +50,7 @@
 
   protected override void OnAfterRender(bool _)
   {
-    JS.InvokeAsync<string>("initializeCodeBlocks");
+    JS.InvokeAsync<string>("initializeCodeBlocks", Identifier);
     JS.InvokeAsync<string>("initializeDiagrams");
     JS.InvokeAsync<string>("initializeIcons");
   }
