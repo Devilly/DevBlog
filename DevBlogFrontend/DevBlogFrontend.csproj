@@ -11,6 +11,11 @@
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
+  <!-- According to the documentation dotnet-watch should track changes in wwwroot.
+  I found this to be functional only part of the time. If necessary we can add wwwroot here explicitly.
+  
+  https://docs.microsoft.com/en-us/aspnet/core/tutorials/dotnet-watch?view=aspnetcore-5.0#customize-files-list-to-watch -->
+
   <ItemGroup>
     <ProjectReference Include="..\PostsListGenerator\PostsListGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
