@@ -20,7 +20,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
 
     <script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
-    <script>mermaid.initialize({ startOnLoad:false });</script>
+    <script>mermaid.initialize({ startOnLoad: false });</script>
 
     <script>
         function initializeDiagrams() {
@@ -33,15 +33,15 @@
             })
         }
 
-        function initializeCodeBlocks() {
+        function initializeCodeBlocks(postIdentifier) {
             var elements = document.querySelectorAll("pre");
-            
+
             elements.forEach(element => {
                 const code = element.textContent;
                 const codeElement = element.querySelector("code");
                 const postContainer = document.querySelector("#post");
-                
-                if(!codeElement.classList.contains("language-javascript")) {
+
+                if (!codeElement.classList.contains("language-javascript")) {
                     hljs.highlightElement(codeElement);
 
                     return;
@@ -49,13 +49,20 @@
 
                 // Remove code element
                 element.parentElement.removeChild(element);
-                
+
                 // Create and add canvas
                 const canvas = document.createElement("canvas")
                 postContainer.insertBefore(canvas, element.nextElementSibling);
 
-                // Execute code
-                eval(`(async () => { ${code} })()`);
+                // Execute code 
+                // eval(`(async () => { ${code} })()`);
+                Function(`"use strict";return async ({
+                    canvas,
+                    postIdentifier
+                }) => {${code}}`)()({
+                    canvas,
+                    postIdentifier
+                })
             });
         }
 
@@ -64,7 +71,7 @@
 
             elements.forEach(element => {
                 const icon = element.getAttribute("data-feather");
-                
+
                 element.outerHTML = feather.icons[icon].toSvg();
             });
         }
