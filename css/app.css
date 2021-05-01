@@ -27,6 +27,10 @@
     --color-prussian-blue: #1d3557;
 }
 
+h1 {
+    font-size: 1.8em;
+}
+
 #index {
     list-style: none;
     padding-inline-start: 0;
@@ -96,7 +100,7 @@ a:hover {
     white-space: pre-wrap;
 }
 
-#post ul {
+#post ol {
     padding-inline-start: 0px;
     list-style-position: inside;
 }
