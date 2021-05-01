@@ -62,7 +62,8 @@ namespace PostsListGenerator
                         "psychology",
                         "GameMaker 1.4",
                         "A*",
-                        "Unity"
+                        "Unity",
+                        "Krita"
                     }).Contains(tagText))
                     {
                         Environment.Exit(1);
