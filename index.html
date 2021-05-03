@@ -47,36 +47,9 @@
                     return;
                 }
 
-                // Create canvas container
-                const canvasContainer = document.createElement("div");
-                canvasContainer.classList.add("canvasContainer");
-
                 // Create and add canvas
                 const canvas = document.createElement("canvas");
-                canvasContainer.appendChild(canvas);
-
-                // Create and add fullscreen button container
-                const fullscreenButtonContainer = document.createElement("div");
-                fullscreenButtonContainer.classList.add("fullscreenButtonContainer");
-
-                // pointerdown is not recognized as a valid user interaction according to the spec.
-                // https://html.spec.whatwg.org/multipage/interaction.html#user-activation-processing-model
-                // Therefore using pointerup as the event.
-                fullscreenButtonContainer.addEventListener("pointerup", async () => {
-                    await canvasContainer.requestFullscreen({
-                        navigationUI: "hide"
-                    });
-                    await screen.orientation.lock("portrait");
-                });
-                canvasContainer.appendChild(fullscreenButtonContainer);
-
-                // Create and add fullscreen button
-                const fullscreenButton = document.createElement("i");
-                fullscreenButton.setAttribute("data-feather", "maximize");
-                fullscreenButtonContainer.appendChild(fullscreenButton);
-
-                // Add canvas container to page
-                postContainer.insertBefore(canvasContainer, element.nextElementSibling);
+                postContainer.insertBefore(canvas, element.nextElementSibling);
 
                 // Remove code element
                 element.parentElement.removeChild(element);
