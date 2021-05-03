@@ -58,8 +58,15 @@
                 // Create and add fullscreen button container
                 const fullscreenButtonContainer = document.createElement("div");
                 fullscreenButtonContainer.classList.add("fullscreenButtonContainer");
-                fullscreenButtonContainer.addEventListener("pointerdown", () => {
-                    canvasContainer.requestFullscreen();
+
+                // pointerdown is not recognized as a valid user interaction according to the spec.
+                // https://html.spec.whatwg.org/multipage/interaction.html#user-activation-processing-model
+                // Therefore using pointerup as the event.
+                fullscreenButtonContainer.addEventListener("pointerup", async () => {
+                    await canvasContainer.requestFullscreen({
+                        navigationUI: "hide"
+                    });
+                    await screen.orientation.lock("landscape");
                 });
                 canvasContainer.appendChild(fullscreenButtonContainer);
 
