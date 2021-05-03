@@ -47,12 +47,32 @@
                     return;
                 }
 
-                // Remove code element
-                element.parentElement.removeChild(element);
+                // Create canvas container
+                const canvasContainer = document.createElement("div");
+                canvasContainer.classList.add("canvasContainer");
 
                 // Create and add canvas
-                const canvas = document.createElement("canvas")
-                postContainer.insertBefore(canvas, element.nextElementSibling);
+                const canvas = document.createElement("canvas");
+                canvasContainer.appendChild(canvas);
+
+                // Create and add fullscreen button container
+                const fullscreenButtonContainer = document.createElement("div");
+                fullscreenButtonContainer.classList.add("fullscreenButtonContainer");
+                fullscreenButtonContainer.addEventListener("pointerdown", () => {
+                    canvasContainer.requestFullscreen();
+                });
+                canvasContainer.appendChild(fullscreenButtonContainer);
+
+                // Create and add fullscreen button
+                const fullscreenButton = document.createElement("i");
+                fullscreenButton.setAttribute("data-feather", "maximize");
+                fullscreenButtonContainer.appendChild(fullscreenButton);
+
+                // Add canvas container to page
+                postContainer.insertBefore(canvasContainer, element.nextElementSibling);
+
+                // Remove code element
+                element.parentElement.removeChild(element);
 
                 // Execute code
                 // Use an alternative to eval: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval#never_use_eval!

@@ -62,19 +62,6 @@ h1 {
     height: 3em;
 }
 
-button {
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-
-    color: var(--color-celadon-blue);
-}
-
-button:hover {
-    color: var(--color-imperial-red);
-}
-
 a {
     text-decoration: none;
     color: var(--color-celadon-blue);
@@ -107,4 +94,25 @@ a:hover {
 #post ol {
     padding-inline-start: 0px;
     list-style-position: inside;
+}
+
+#post .canvasContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#post .canvasContainer canvas {
+    background-color: white;
+}
+
+#post .canvasContainer .fullscreenButtonContainer {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#post .canvasContainer:fullscreen .fullscreenButtonContainer {
+    display: none;
 }
