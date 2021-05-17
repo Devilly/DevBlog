@@ -33,6 +33,16 @@
             })
         }
 
+        function initializeImages() {
+            var elements = document.querySelectorAll("img");
+
+            elements.forEach(element => {
+                element.addEventListener("click", () => {
+                    window.open(element.src);
+                });
+            })
+        }
+
         function initializeCodeBlocks(postIdentifier) {
             var elements = document.querySelectorAll("pre");
 
