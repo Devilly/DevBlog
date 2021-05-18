@@ -37,7 +37,7 @@
             var elements = document.querySelectorAll("img");
 
             elements.forEach(element => {
-                element.addEventListener("click", () => {
+                element.addEventListener("pointerup", () => {
                     window.open(element.src);
                 });
             })
