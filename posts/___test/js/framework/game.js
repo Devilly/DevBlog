@@ -50,13 +50,13 @@ export default class Game {
 
                 this.#entities.forEach(entity => {
                     // Get framework components and update them, where needed
-                    const spriteComponent = entity.components.find(component => component instanceof SpriteComponent)
+                    const spriteComponent = entity.getComponents().find(component => component instanceof SpriteComponent)
                     spriteComponent.update({ elapsedTime })
 
-                    const positionComponent = entity.components.find(component => component instanceof PositionComponent)
+                    const positionComponent = entity.getComponents().find(component => component instanceof PositionComponent)
 
                     // Get all custom components and update them
-                    entity.components
+                    entity.getComponents()
                         .filter(component => component instanceof CustomComponent)
                         .forEach(component => component.update({
                             elapsedTime,

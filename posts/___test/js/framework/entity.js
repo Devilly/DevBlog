@@ -1,11 +1,24 @@
 export default class Entity {
     #components
+    #children
 
-    constructor(...components) {
+    setComponents(...components) {
         this.#components = components
+
+        return this
     }
 
-    get components() {
+    getComponents() {
         return this.#components
+    }
+    
+    setChildren(...children) {
+        this.#children = children
+
+        return this
+    }
+
+    getChildren() {
+        return this.#children
     }
 }
