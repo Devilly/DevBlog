@@ -11,9 +11,9 @@
 <ol id="index">
     @foreach(Post post in Posts) {
         <li>
-            <NavLink href=@($"post/{post.Path}")>
+            <a href=@($"post/{post.Path}")>
                 @post.Title
-            </NavLink>
+            </a>
             
             <time>@post.Date.ToString("dd MMMM yyyy")</time>
             
