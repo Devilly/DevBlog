@@ -37,9 +37,13 @@
             var elements = document.querySelectorAll("img");
 
             elements.forEach(element => {
-                element.addEventListener("click", () => {
-                    window.open(element.src);
-                });
+                const link = document.createElement("a")
+                link.setAttribute("href", element.src)
+                link.setAttribute("data-link-type", "image")
+
+                element.parentElement.insertBefore(link, element)
+
+                link.appendChild(element)
             })
         }
 
