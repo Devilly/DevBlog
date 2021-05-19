@@ -5,6 +5,8 @@ const { default: PositionComponent } = await import('./framework/positionCompone
 
 const { loadAll } = await import(`./framework/util/image.js`)
 
+const { default: LogComponent } = await import('./logComponent.js')
+
 export default async function main({
     canvas,
     postIdentifier
@@ -15,13 +17,15 @@ export default async function main({
         ])
     })
     const positionComponent = new PositionComponent()
+    const logComponent = new LogComponent()
 
     new Game(canvas)
         .addEntity(
             new Entity()
             .setComponents(
                 spriteComponent,
-                positionComponent
+                positionComponent,
+                logComponent
             ))
         .start()
 }
