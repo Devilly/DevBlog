@@ -6,7 +6,6 @@ const { default: CustomComponent } = await import('./customComponent.js')
 
 export default class Game {
     #context
-
     #view
 
     #entities
@@ -47,32 +46,66 @@ export default class Game {
                 context.scale(scale, scale)
 
                 const elapsedTime = time - lastTime
-
-                this.#entities.forEach(entity => {
-                    // Get framework components and update them, where needed
-                    const spriteComponent = entity.getComponents().find(component => component instanceof SpriteComponent)
-                    spriteComponent.update({ elapsedTime })
-
-                    const positionComponent = entity.getComponents().find(component => component instanceof PositionComponent)
-
-                    // Get all custom components and update them
-                    entity.getComponents()
-                        .filter(component => component instanceof CustomComponent)
-                        .forEach(component => component.update({
-                            elapsedTime,
-                            view: this.#view
-                        }))
-
-                    // Draw entity
-                    context.drawImage(
-                        spriteComponent.image,
-                        positionComponent.X - spriteComponent.image.width / 2,
-                        positionComponent.Y - spriteComponent.image.height / 2
-                    )
+                this.#updateAndDrawEntities({
+                    entities: this.#entities,
+                    origin: {
+                        X: 0,
+                        Y: 0
+                    },
+                    elapsedTime
                 })
 
                 context.restore()
             })()
+    }
+
+    #updateAndDrawEntities({
+        entities,
+        origin,
+        elapsedTime
+    }) {
+        const context = this.#context
+
+        entities.forEach(entity => {
+            entity.components.ALL
+                .forEach(component => component?.update?.({
+                    elapsedTime,
+                    view: this.#view
+                }))
+
+            // Draw entity
+            const positionComponent = entity.components.PositionComponent
+            const calculatedPositionX = origin.X + positionComponent.X
+            const calculatedPositionY = origin.Y + positionComponent.Y
+
+            const spriteComponent = entity.components.SpriteComponent
+            if(spriteComponent) {
+                context.drawImage(
+                    spriteComponent.image,
+                    calculatedPositionX - spriteComponent.image.width / 2,
+                    calculatedPositionY - spriteComponent.image.height / 2
+                )
+            }
+
+            const textComponent = entity.components.TextComponent
+            if(textComponent) {
+                context.font = textComponent.font
+                context.fillText(
+                    textComponent.text,
+                    calculatedPositionX,
+                    calculatedPositionY
+                )
+            }
+
+            this.#updateAndDrawEntities({
+                entities: entity.children.ALL,
+                origin: {
+                    X: calculatedPositionX,
+                    Y: calculatedPositionY
+                },
+                elapsedTime
+            })
+        })
     }
 
     addEntity(entity) {
