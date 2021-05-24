@@ -21,11 +21,10 @@ export default async function main({
     .addEntity(
       new Entity()
         .addComponents(
-          new SpriteComponent({
-            images: await loadAll([
+          new SpriteComponent(
+            await loadAll([
               `posts/${postIdentifier}/img/Card-(Bomb-Life).png`
-            ])
-          }),
+            ])),
           new PositionComponent(),
           new LogComponent(),
           new PlacementComponent()
@@ -33,48 +32,43 @@ export default async function main({
         .addChildren(
           new Entity()
             .addComponents(
-              new SpriteComponent({
-                images: await loadAll([
+              new SpriteComponent(
+                await loadAll([
                   `posts/${postIdentifier}/img/Face-1.png`
-                ])
-              }),
+                ])),
               new PositionComponent(50, 10)
             )
             .addChildren(
               new Entity()
                 .addComponents(
-                  new SpriteComponent({
-                    images: await loadAll([
+                  new SpriteComponent(
+                    await loadAll([
                       `posts/${postIdentifier}/img/Life-(yellow)_Small.png`
-                    ])
-                  }),
+                    ])),
                   new PositionComponent(0, -110)
                 ),
               new Entity()
                 .addComponents(
-                  new SpriteComponent({
-                    images: await loadAll([
+                  new SpriteComponent(
+                    await loadAll([
                       `posts/${postIdentifier}/img/Life-(red)_Small.png`
-                    ])
-                  }),
+                    ])),
                   new PositionComponent(-56, 95)
                 ),
               new Entity()
                 .addComponents(
-                  new SpriteComponent({
-                    images: await loadAll([
+                  new SpriteComponent(
+                    await loadAll([
                       `posts/${postIdentifier}/img/Life-(red)_Small.png`
-                    ])
-                  }),
+                    ])),
                   new PositionComponent(0, 110)
                 ),
               new Entity()
                 .addComponents(
-                  new SpriteComponent({
-                    images: await loadAll([
+                  new SpriteComponent(
+                    await loadAll([
                       `posts/${postIdentifier}/img/Life-(red)_Small.png`
-                    ])
-                  }),
+                    ])),
                   new PositionComponent(59, 95)
                 )
             )
@@ -82,8 +76,22 @@ export default async function main({
     .addEntity(
       new Entity()
       .addComponents(
-        new PositionComponent(400, 400),
-        new TextComponent('dldkjgfdlkgjdkgllol', '48px gomarice')
+        new PositionComponent(900, 50),
+        new TextComponent('score: 0', {
+          font: '70px gomarice',
+          baseline: 'top'
+        })
+      )
+    )
+    .addEntity(
+      new Entity()
+      .addComponents(
+        new PositionComponent(1750, 50),
+        new TextComponent('highscore: 0', {
+          font: '70px gomarice',
+          alignment: 'right',
+          baseline: 'top'
+        })
       )
     )
     .start()

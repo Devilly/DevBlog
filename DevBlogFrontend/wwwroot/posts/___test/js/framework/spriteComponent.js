@@ -7,10 +7,15 @@ export default class SpriteComponent extends Component {
   #currentFrame
   #elapsedTime
 
-  constructor({ images, fps = 5 }) {
+  constructor(images,
+    {
+      fps
+    } = {}) {
     super()
 
     this.#images = images
+
+    fps = fps ?? 5
 
     // Time per frame calculation: seconds / fps * milliseconds
     this.#timePerFrame = 1 / fps * 1000
