@@ -3,12 +3,21 @@ const { default: Component } = await import('./component.js')
 export default class TextComponent extends Component {
   #text
   #font
+  #alignment
+  #baseline
 
-  constructor(text = '', font = '48px monospace') {
+  constructor(text = '', {
+    font,
+    alignment,
+    baseline
+  } = {}) {
     super()
 
     this.#text = text
-    this.#font = font
+
+    this.#font = font ?? '48px monospace'
+    this.#alignment = alignment ?? 'center'
+    this.#baseline = baseline ?? 'middle'
   }
 
   get text() {
@@ -25,5 +34,21 @@ export default class TextComponent extends Component {
 
   set font(font) {
     this.#font = font
+  }
+
+  get alignment() {
+    return this.#alignment
+  }
+
+  set alignment(alignment) {
+    this.#alignment = alignment
+  }
+
+  get baseline() {
+    return this.#baseline
+  }
+
+  set baseline(baseline) {
+    this.#baseline = baseline
   }
 }

@@ -57,6 +57,8 @@ export default class Game {
 
                 context.restore()
             })()
+        
+        return this
     }
 
     #updateAndDrawEntities({
@@ -67,17 +69,19 @@ export default class Game {
         const context = this.#context
 
         entities.forEach(entity => {
+            // Update all components
             entity.components.ALL
                 .forEach(component => component?.update?.({
                     elapsedTime,
                     view: this.#view
                 }))
 
-            // Draw entity
+            // Calculate world position
             const positionComponent = entity.components.PositionComponent
             const calculatedPositionX = origin.X + positionComponent.X
             const calculatedPositionY = origin.Y + positionComponent.Y
 
+            // Draw sprite, if applicable
             const spriteComponent = entity.components.SpriteComponent
             if(spriteComponent) {
                 context.drawImage(
@@ -87,9 +91,13 @@ export default class Game {
                 )
             }
 
+            // Draw text, if applicable
             const textComponent = entity.components.TextComponent
             if(textComponent) {
                 context.font = textComponent.font
+                context.textAlign = textComponent.alignment
+                context.textBaseline = textComponent.baseline
+
                 context.fillText(
                     textComponent.text,
                     calculatedPositionX,
@@ -97,6 +105,7 @@ export default class Game {
                 )
             }
 
+            // Traverse all child entities
             this.#updateAndDrawEntities({
                 entities: entity.children.ALL,
                 origin: {
@@ -112,6 +121,10 @@ export default class Game {
         this.#entities.push(entity)
 
         return this
+    }
+
+    get view() {
+        return this.#view
     }
 }
 
