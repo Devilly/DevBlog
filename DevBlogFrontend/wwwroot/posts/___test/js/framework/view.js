@@ -22,12 +22,15 @@ export default class View {
     resizeObserver.observe(canvas)
   }
 
-  get info() {
-    return {
-      width: this.#width,
-      height: this.#height,
+  get width() {
+    return this.#width
+  }
 
-      scale: this.#scale
-    }
+  get height() {
+    return this.#height
+  }
+
+  get scale() {
+    return this.#scale
   }
 }

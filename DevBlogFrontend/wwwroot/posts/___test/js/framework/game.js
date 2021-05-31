@@ -1,28 +1,55 @@
 const { default: View } = await import('./view.js')
 
-const { default: SpriteComponent } = await import('./spriteComponent.js')
-const { default: PositionComponent } = await import('./positionComponent.js')
-const { default: CustomComponent } = await import('./customComponent.js')
-
 export default class Game {
     #context
     #view
 
-    #entities
+    #data
+
+    #entities = []
+
+    #events = {}
 
     constructor(canvas) {
         this.#context = canvas.getContext('2d')
 
         // Set canvas styling.
-        canvas.style.display = "block";
-        canvas.style.touchAction = "none";
-        canvas.style.width = "100%";
+        canvas.style.display = 'block'
+        canvas.style.touchAction = 'non'
+        canvas.style.width = '100%'
 
-        // Initialize framework
+        // Add event listeners.
+        const eventTypes = [
+            'pointerup'
+        ]
+
+        eventTypes.forEach(eventType => {
+            canvas.addEventListener(eventType, event => {
+                const eventObject = {
+                    X: (event.clientX - canvas.getBoundingClientRect().left) / this.#view.scale,
+                    Y: (event.clientY - canvas.getBoundingClientRect().top) / this.#view.scale
+                }
+
+                if(eventType in this.#events) {
+                    this.#events[eventType].push(eventObject)
+                } else {
+                    this.#events[eventType] = [eventObject]
+                }
+            })
+        })
+
         this.#view = new View(canvas)
-
-        this.#entities = []
     }
+
+    entities = new Proxy({}, {
+        get: (_, property) => {
+            if (property === 'ALL') {
+                return this.#entities.slice()
+            }
+
+            return this.#entities.find(entity => entity.getName() === property)
+        }
+    })
 
     start() {
         const context = this.#context
@@ -35,40 +62,61 @@ export default class Game {
                     width,
                     height,
                     scale
-                } = this.#view.info
+                } = this.#view
 
                 context.clearRect(0, 0, width, height)
 
                 if (!lastTime) return
 
                 context.save()
-                
+
                 context.scale(scale, scale)
 
                 const elapsedTime = time - lastTime
+                
+                const events = this.#events
+                this.#events = {}
+
                 this.#updateAndDrawEntities({
                     entities: this.#entities,
                     origin: {
                         X: 0,
                         Y: 0
                     },
-                    elapsedTime
+                    elapsedTime,
+                    events
                 })
 
                 context.restore()
             })()
-        
+
         return this
     }
 
     #updateAndDrawEntities({
         entities,
         origin,
-        elapsedTime
+        elapsedTime,
+        events
     }) {
         const context = this.#context
 
         entities.forEach(entity => {
+            const positionComponent = entity.components.PositionComponent
+            const spriteComponent = entity.components.SpriteComponent
+            const textComponent = entity.components.TextComponent
+
+            // Find triggered events
+            const pointerUp = events.pointerup?.[0]
+            const aabb = entity.AABB
+
+            if (pointerUp && aabb &&
+                pointerUp.X >= aabb.min.X && pointerUp.X <= aabb.max.X &&
+                pointerUp.Y >= aabb.min.Y && pointerUp.Y <= aabb.max.Y) {
+                    
+                console.log('check! :D')
+            }
+
             // Update all components
             entity.components.ALL
                 .forEach(component => component?.update?.({
@@ -76,24 +124,28 @@ export default class Game {
                     view: this.#view
                 }))
 
+            if (!positionComponent) return
+
             // Calculate world position
-            const positionComponent = entity.components.PositionComponent
             const calculatedPositionX = origin.X + positionComponent.X
             const calculatedPositionY = origin.Y + positionComponent.Y
 
             // Draw sprite, if applicable
-            const spriteComponent = entity.components.SpriteComponent
-            if(spriteComponent) {
+            if (spriteComponent) {
+                const scaledWidth = spriteComponent.image.width * spriteComponent.scale
+                const scaledHeight = spriteComponent.image.height * spriteComponent.scale
+
                 context.drawImage(
                     spriteComponent.image,
-                    calculatedPositionX - spriteComponent.image.width / 2,
-                    calculatedPositionY - spriteComponent.image.height / 2
+                    calculatedPositionX - scaledWidth / 2,
+                    calculatedPositionY - scaledHeight / 2,
+                    scaledWidth,
+                    scaledHeight
                 )
             }
 
             // Draw text, if applicable
-            const textComponent = entity.components.TextComponent
-            if(textComponent) {
+            if (textComponent) {
                 context.font = textComponent.font
                 context.textAlign = textComponent.alignment
                 context.textBaseline = textComponent.baseline
@@ -112,15 +164,32 @@ export default class Game {
                     X: calculatedPositionX,
                     Y: calculatedPositionY
                 },
-                elapsedTime
+                elapsedTime,
+                events
             })
         })
     }
 
+    provideData(data) {
+        this.#data = data
+
+        return this
+    }
+
     addEntity(entity) {
+        entity.game = this
+
+        for (const component of entity.components.ALL) {
+            component.init?.()
+        }
+
         this.#entities.push(entity)
 
         return this
+    }
+
+    get data() {
+        return this.#data
     }
 
     get view() {

@@ -7,13 +7,16 @@ export default class SpriteComponent extends Component {
   #currentFrame
   #elapsedTime
 
+  #scale
+
   constructor(images,
     {
-      fps
+      fps,
+      scale
     } = {}) {
     super()
 
-    this.#images = images
+    this.#images = images instanceof Array ? images : [images]
 
     fps = fps ?? 5
 
@@ -21,6 +24,8 @@ export default class SpriteComponent extends Component {
     this.#timePerFrame = 1 / fps * 1000
     this.#currentFrame = 0
     this.#elapsedTime = 0
+
+    this.#scale = scale ?? 1
   }
 
   update({ elapsedTime }) {
@@ -38,5 +43,9 @@ export default class SpriteComponent extends Component {
     if (!this.#images) return null
 
     return this.#images[this.#currentFrame]
+  }
+
+  get scale() {
+    return this.#scale
   }
 }
