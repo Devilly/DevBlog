@@ -1,55 +1,79 @@
+const { default: AABB } = await import('./AABB.js')
+const { default: Point } = await import('./point.js')
+
 export default class Entity {
-    #components = []
-    #children = []
+  #name = undefined
 
-    components = new Proxy({}, {
-        get: (_, property) => {
-            if(property === 'ALL') {
-                return this.#components.slice()
-            }
+  #components = []
+  #children = []
 
-            return this.#components.find(component => component.constructor.name === property)
-        }
-    })
+  components = new Proxy({}, {
+    get: (_, property) => {
+      if (property === 'ALL') {
+        return this.#components.slice()
+      }
 
-    children = new Proxy({}, {
-        get: (_, property) => {
-            if(property === 'ALL') {
-                return this.#children.slice()
-            }
+      return this.#components.find(component => component.constructor.name === property)
+    }
+  })
 
-            return undefined
-        }
-    }) 
+  children = new Proxy({}, {
+    get: (_, property) => {
+      if (property === 'ALL') {
+        return this.#children.slice()
+      }
 
-    addComponent(component) {
-        component.entity = this
+      return undefined
+    }
+  })
+
+  setName(name) {
+    this.#name = name
+
+    return this
+  }
+
+  getName() {
+    return this.#name
+  }
+
+  addComponents(...components) {
+    for (const component of components) {
+      component.entity = this
+
+      this.#components.push(component)
+    }
+
+    if(this.game) {
+      for (const component of components) {
         component.init?.()
-
-        this.#components.push(component)
-
-        return this
+      }
     }
 
-    addComponents(...components) {
-        for(const component of components) {
-            this.addComponent(component)
-        }
+    return this
+  }
 
-        return this
+  addChildren(...children) {
+    for (const child of children) {
+      this.#children.push(child)
     }
 
-    addChild(child) {
-        this.#children.push(child)
+    return this
+  }
 
-        return this
-    }
+  get AABB() {
+    const positionComponent = this.components.PositionComponent
+    const spriteComponent = this.components.SpriteComponent
 
-    addChildren(...children) {
-        for(const child of children) {
-            this.addChild(child)
-        }
+    if(!positionComponent || !spriteComponent) return undefined
 
-        return this
-    }
+    return new AABB(
+      new Point(
+        positionComponent.X - spriteComponent.image.width / 2,
+        positionComponent.Y - spriteComponent.image.height / 2),
+      new Point(
+        positionComponent.X + spriteComponent.image.width / 2,
+        positionComponent.Y + spriteComponent.image.height / 2),
+    )
+  }
 }
