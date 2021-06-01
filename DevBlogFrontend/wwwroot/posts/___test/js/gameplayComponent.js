@@ -4,16 +4,21 @@ const { default: Entity } = await import('./framework/entity.js')
 const { default: SpriteComponent } = await import('./framework/spriteComponent.js')
 const { default: PositionComponent } = await import('./framework/positionComponent.js')
 
+const { default: GridPositionComponent } = await import('./gridPositionComponent.js')
+const { default: VisibilityComponent } = await import('./visibilityComponent.js')
+
 export default class GameplayComponent extends CustomComponent {
   #numberOfColumns = 5
   #numberOfRows = 3
 
-  #weightedCardsList
-
-  #playerPosition = {
+  #initialPlayerPosition = {
     X: Math.floor(this.#numberOfColumns / 2),
     Y: Math.floor(this.#numberOfRows / 2)
   }
+
+  #scale = .8
+
+  #weightedCardsList
 
   init() {
     const cardWeights = {
@@ -49,12 +54,11 @@ export default class GameplayComponent extends CustomComponent {
       ]
     })
 
-    const scale = .8
-
+    // Generate all tiles for the initial boards.
     for (let x = 0; x < this.#numberOfColumns; x++) {
       for (let y = 0; y < this.#numberOfRows; y++) {
 
-        if (x === this.#playerPosition.X && y === this.#playerPosition.Y) {
+        if (x === this.#initialPlayerPosition.X && y === this.#initialPlayerPosition.Y) {
           const image = this.entity.game.data['face_motivated.png']
 
           this.entity.game.addEntity(
@@ -62,10 +66,11 @@ export default class GameplayComponent extends CustomComponent {
               .setName('face')
               .addComponents(
                 new SpriteComponent(this.entity.game.data['face_motivated.png']),
-                new PositionComponent(
-                  x * 300 + image.width / 2 * scale + 6,
-                  y * 270 + image.height / 2 * scale + 100 + 8
-                )
+                new PositionComponent(),
+                new GridPositionComponent(x, y, {
+                  deltaX: -18,
+                  deltaY: -18
+                })
               )
               .addChildren(
                 new Entity()
@@ -92,6 +97,7 @@ export default class GameplayComponent extends CustomComponent {
 
           continue
         }
+
         const randomIndex = Math.floor(Math.random() * this.#weightedCardsList.length)
         const image = this.entity.game.data[this.#weightedCardsList[randomIndex]]
 
@@ -99,22 +105,14 @@ export default class GameplayComponent extends CustomComponent {
           new Entity()
             .addComponents(
               new SpriteComponent(image, {
-                scale
+                scale: this.#scale
               }),
-              new PositionComponent(
-                x * 300 + image.width / 2 * scale,
-                y * 270 + image.height / 2 * scale + 100
-              )
+              new PositionComponent(),
+              new GridPositionComponent(x, y),
+              new VisibilityComponent()
             )
         )
       }
     }
-  }
-
-  update({
-    elapsedTime,
-    view
-  }) {
-
   }
 }

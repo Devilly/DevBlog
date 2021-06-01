@@ -8,11 +8,13 @@ export default class SpriteComponent extends Component {
   #elapsedTime
 
   #scale
+  #alpha
 
   constructor(images,
     {
       fps,
-      scale
+      scale,
+      alpha
     } = {}) {
     super()
 
@@ -26,6 +28,7 @@ export default class SpriteComponent extends Component {
     this.#elapsedTime = 0
 
     this.#scale = scale ?? 1
+    this.#alpha = alpha ?? 1
   }
 
   update({ elapsedTime }) {
@@ -47,5 +50,17 @@ export default class SpriteComponent extends Component {
 
   get scale() {
     return this.#scale
+  }
+
+  set scale(scale) {
+    this.#scale = scale
+  }
+
+  get alpha() {
+    return this.#alpha
+  }
+
+  set alpha(alpha) {
+    this.#alpha = alpha
   }
 }
