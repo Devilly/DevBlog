@@ -64,7 +64,7 @@ namespace PostsListGenerator
                         "A*",
                         "Unity",
                         "Krita",
-                        "miscellaneous" 
+                        "miscellaneous"
                     }).Contains(tagText))
                     {
                         Environment.Exit(1);
