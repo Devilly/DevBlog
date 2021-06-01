@@ -63,7 +63,8 @@ namespace PostsListGenerator
                         "GameMaker 1.4",
                         "A*",
                         "Unity",
-                        "Krita"
+                        "Krita",
+                        "miscellaneous" 
                     }).Contains(tagText))
                     {
                         Environment.Exit(1);
