@@ -132,8 +132,12 @@ export default class Game {
 
             // Draw sprite, if applicable
             if (spriteComponent) {
+                context.save()
+
                 const scaledWidth = spriteComponent.image.width * spriteComponent.scale
                 const scaledHeight = spriteComponent.image.height * spriteComponent.scale
+
+                context.globalAlpha = spriteComponent.alpha
 
                 context.drawImage(
                     spriteComponent.image,
@@ -142,6 +146,8 @@ export default class Game {
                     scaledWidth,
                     scaledHeight
                 )
+
+                context.restore()
             }
 
             // Draw text, if applicable
