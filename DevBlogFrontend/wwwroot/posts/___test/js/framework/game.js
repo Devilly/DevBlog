@@ -129,7 +129,8 @@ export default class Game {
         .forEach(component => component?.update?.({
           elapsedTime,
           view: this.#view,
-          events: applicableEvents
+          events: applicableEvents,
+          data: this.#data
         }))
 
       if (!positionComponent) return
@@ -194,20 +195,14 @@ export default class Game {
     entity.game = this
 
     for (const component of entity.components.ALL) {
-      component.init?.()
+      component.init?.({
+        data: this.#data
+      })
     }
 
     this.#entities.push(entity)
 
     return this
-  }
-
-  get data() {
-    return this.#data
-  }
-
-  get view() {
-    return this.#view
   }
 }
 

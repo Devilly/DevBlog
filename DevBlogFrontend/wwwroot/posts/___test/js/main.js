@@ -20,34 +20,63 @@ export default async function main({
   await fontGomarice.load()
   document.fonts.add(fontGomarice);
 
-  const images = {}
-  const imageFiles = [
-    'plus_one.png',
-    'plus_two.png',
-    'bomb_life.png',
-    'bomb.png',
-    'exit.png',
-    'life_gold.png',
-    'life_red.png',
-    'play.png',
-    'poison.png',
-    'face_motivated.png',
-    'face_surprised.png',
-    'face_sad.png',
-    'restart.png',
-    
-    'heart_grey.png',
-    'heart_red.png',
-    'heart_gold.png'
-  ]
-  for (const imageFile of imageFiles) {
-    const image = await load(`${rootUrl}/img/${imageFile}`)
-
-    images[imageFile] = image
+  const loadImages = async imageObject => {
+    for (const imageName of Object.keys(imageObject)) {
+      const image = await load(`${rootUrl}/img/${imageName}`)
+  
+      imageObject[imageName].image = image
+    }
   }
 
+  const genericImages = {
+    'exit.png': {},
+    'play.png': {},
+    'face_motivated.png': {},
+    'face_surprised.png': {},
+    'face_sad.png': {},
+    'restart.png': {}, 
+    'heart_grey.png': {},
+    'heart_red.png': {},
+    'heart_gold.png': {}
+  }
+  await loadImages(genericImages)
+
+  const cardImages = {
+    'plus_one.png': {
+      weight: 8,
+      act: component => {
+        component.entity.game.entities.score.components.ScoreComponent.score += 1
+      }
+    },
+    'plus_two.png': {
+      weight: 4,
+      act: component => {
+        component.entity.game.entities.score.components.ScoreComponent.score += 2
+      }
+    },
+    'bomb_life.png': {
+      weight: 1,
+    },
+    'bomb.png': {
+      weight: 2
+    },
+    'life_gold.png': {
+      weight: 1
+    },
+    'life_red.png': {
+      weight: 4
+    },
+    'poison.png': {
+      weight: 6
+    }
+  }
+  await loadImages(cardImages)
+
   new Game(canvas)
-    .provideData(images)
+    .provideData({
+      genericImages,
+      cardImages
+    })
 
     .addEntity(
       new Entity()
