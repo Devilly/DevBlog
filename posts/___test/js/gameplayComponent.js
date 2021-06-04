@@ -6,6 +6,7 @@ const { default: PositionComponent } = await import('./framework/positionCompone
 
 const { default: GridPositionComponent } = await import('./gridPositionComponent.js')
 const { default: VisibilityComponent } = await import('./visibilityComponent.js')
+const { default: InteractionComponent } = await import('./interactionComponent.js')
 
 export default class GameplayComponent extends CustomComponent {
   #numberOfColumns = 5
@@ -20,37 +21,20 @@ export default class GameplayComponent extends CustomComponent {
 
   #weightedCardsList
 
-  init() {
-    const cardWeights = {
-      'plus_one.png': {
-        weight: 8
-      },
-      'plus_two.png': {
-        weight: 4
-      },
-      'bomb_life.png': {
-        weight: 1
-      },
-      'bomb.png': {
-        weight: 2
-      },
-      'life_gold.png': {
-        weight: 1
-      },
-      'life_red.png': {
-        weight: 4
-      },
-      'poison.png': {
-        weight: 6
-      }
-    }
+  init({
+    data
+  }) {
+    const getGenericImage = name => data.genericImages[name].image
+
+    const cardImages = data.cardImages
+    const getCardImage = name => cardImages[name].image
 
     this.#weightedCardsList = []
-
-    Object.keys(cardWeights).forEach(key => {
+    
+    Object.keys(cardImages).forEach(key => {
       this.#weightedCardsList = [
         ...this.#weightedCardsList,
-        ...Array(cardWeights[key].weight).fill(undefined).map(_ => key)
+        ...Array(cardImages[key].weight).fill(undefined).map(_ => key)
       ]
     })
 
@@ -59,13 +43,11 @@ export default class GameplayComponent extends CustomComponent {
       for (let y = 0; y < this.#numberOfRows; y++) {
 
         if (x === this.#initialPlayerPosition.X && y === this.#initialPlayerPosition.Y) {
-          const image = this.entity.game.data['face_motivated.png']
-
           this.entity.game.addEntity(
             new Entity()
               .setName('face')
               .addComponents(
-                new SpriteComponent(this.entity.game.data['face_motivated.png']),
+                new SpriteComponent(data.genericImages['face_motivated.png'].image),
                 new PositionComponent(),
                 new GridPositionComponent(x, y, {
                   deltaX: -18,
@@ -75,22 +57,22 @@ export default class GameplayComponent extends CustomComponent {
               .addChildren(
                 new Entity()
                   .addComponents(
-                    new SpriteComponent(this.entity.game.data['heart_gold.png']),
+                    new SpriteComponent(data.genericImages['heart_gold.png'].image),
                     new PositionComponent(0, -110)
                   ),
                 new Entity()
                   .addComponents(
-                    new SpriteComponent(this.entity.game.data['heart_red.png']),
+                    new SpriteComponent(data.genericImages['heart_red.png'].image),
                     new PositionComponent(-56, 95)
                   ),
                 new Entity()
                   .addComponents(
-                    new SpriteComponent(this.entity.game.data['heart_red.png']),
+                    new SpriteComponent(data.genericImages['heart_red.png'].image),
                     new PositionComponent(0, 110)
                   ),
                 new Entity()
                   .addComponents(
-                    new SpriteComponent(this.entity.game.data['heart_red.png']),
+                    new SpriteComponent(data.genericImages['heart_red.png'].image),
                     new PositionComponent(59, 95)
                   )
               ))
@@ -99,17 +81,18 @@ export default class GameplayComponent extends CustomComponent {
         }
 
         const randomIndex = Math.floor(Math.random() * this.#weightedCardsList.length)
-        const image = this.entity.game.data[this.#weightedCardsList[randomIndex]]
+        const card = data.cardImages[this.#weightedCardsList[randomIndex]]
 
         this.entity.game.addEntity(
           new Entity()
             .addComponents(
-              new SpriteComponent(image, {
+              new SpriteComponent(card.image, {
                 scale: this.#scale
               }),
               new PositionComponent(),
               new GridPositionComponent(x, y),
-              new VisibilityComponent()
+              new VisibilityComponent(),
+              new InteractionComponent(card.act)
             )
         )
       }
